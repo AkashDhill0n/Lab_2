@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import ToDoList from './ToDoList'; // Import the ToDoList component
+import { StyleSheet, Text, View } from 'react-native';
+import Form from './components/ToDoForm';
+import TaskList from './components/ToDoList1';
+import Header from './components/Header';
+import { useState } from 'react';
 
-function App() {
-  // Define state variable to store the list of tasks
-  const [tasks, setTasks] = useState([
-    'Do laundry',
-    'Go to gym',
-    'Walk dog'
-  ]);
+export default function App() {
+
+  const [task, setTask] = useState([]);
+
+
+
+  const addTask = (task) =>{
+    setTask((newTask) => { return [{ taskName: task, taskId: Math.random().toString() }, ...newTask] });
+  }
 
   return (
-    <View>
-      {/* Pass the tasks array to the ToDoList component using the tasks prop */}
-      <ToDoList tasks={tasks} />
+    
+    <View style={styles.container}>
+      <Header/>
+      <TaskList tasks={task} setTask={setTask}/>
+      <Form addTask={addTask}/>
     </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'lightblue',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+});
 
